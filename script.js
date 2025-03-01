@@ -48,11 +48,12 @@ function submitScore() {
 
     let timeTaken = Math.floor((endTime - startTime) / 1000); // Convert to seconds
 
-    fetch("http://localhost:5000/submit-score", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, score, time_taken: timeTaken })
-    })
+    fetch("https://example-g5e7.onrender.com", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, score, time_taken })
+})
+
     .then(response => response.json())
     .then(data => {
         alert(data.message);
