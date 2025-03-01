@@ -35,7 +35,6 @@ function selectAnswer(index) {
 function endQuiz() {
     endTime = new Date();
     let timeTaken = Math.floor((endTime - startTime) / 1000);  // Convert to seconds
-    
     alert(`Quiz over! Score: ${score}, Time Taken: ${timeTaken} seconds`);
 }
 
@@ -48,12 +47,11 @@ function submitScore() {
 
     let timeTaken = Math.floor((endTime - startTime) / 1000); // Convert to seconds
 
-    fetch("https://example-g5e7.onrender.com", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, score, time_taken })
-})
-
+    fetch("https://example-g5e7.onrender.com", {  // ✅ Use correct backend URL
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, score, time_taken: timeTaken })
+    })
     .then(response => response.json())
     .then(data => {
         alert(data.message);
