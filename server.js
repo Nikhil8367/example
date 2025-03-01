@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mysql = require("mysql");
 const cors = require("cors");
@@ -9,10 +10,10 @@ app.use(bodyParser.json());
 
 // Connect to MySQL
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",  // Change if you set a password
-    password: "Nikhil@834134",
-    database: "quiz_db",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
 db.connect(err => {
@@ -20,11 +21,10 @@ db.connect(err => {
     console.log("Connected to MySQL!");
 });
 
-// API to receive quiz results
 app.post("/submit-score", (req, res) => {
     const { username, score, time_taken } = req.body;
     const sql = "INSERT INTO quiz_results (username, score, time_taken) VALUES (?, ?, ?)";
-    
+
     db.query(sql, [username, score, time_taken], (err, result) => {
         if (err) {
             console.error("Error inserting data:", err);
